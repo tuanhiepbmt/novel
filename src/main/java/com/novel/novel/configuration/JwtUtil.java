@@ -10,14 +10,11 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-	// Jwt Secret
 	private String jwtSecret = "sIoVC8OFOgmxbk9XRYtY2zMKXuYXBGL2d3x1IV37";
 
-	// Jwt Expiration in millis
 	private Long jwtExpiration = 60000000L;
 
 	private Claims parseToken(String token) {
-		// Create JwtParser
 		JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(jwtSecret.getBytes()).build();
 
 		try {
@@ -42,10 +39,8 @@ public class JwtUtil {
 	}
 
 	public String getUsernameFromToken(String token) {
-		// Get claims
 		Claims claims = parseToken(token);
 
-		// Extract subject
 		if (claims != null) {
 			return claims.getSubject();
 		}
@@ -54,10 +49,8 @@ public class JwtUtil {
 	}
 
 	public String generateToken(String username) {
-		// Create signing key
 		Key key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
 
-		// Generate token
 		var currentDate = new Date();
 		var expiration = new Date(currentDate.getTime() + jwtExpiration);
 
